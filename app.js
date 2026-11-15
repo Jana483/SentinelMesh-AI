@@ -90,3 +90,78 @@ document.querySelectorAll(".nav-link").forEach((link) => {
     link.classList.add("active");
   });
 });
+export const RESILIENCE_PLAYBOOKS = [
+  {
+    id: "pb-regional-failover",
+    name: "Regional service failover",
+    category: "Continuity",
+    triggerCondition: "API latency > 250ms for 3 consecutive minutes",
+    triggeredCountThisMonth: 3,
+    status: "Active",
+    approvalRequired: true,
+    steps: [
+      "Verify health of standby endpoint (Continuity Mail / Backup Relay)",
+      "Shift 25% canary traffic to standby region and monitor error rate",
+      "Execute full DNS/routing cutover upon operator approval",
+      "Notify #ops-resilience channel with post-failover telemetry"
+    ]
+  },
+  {
+    id: "pb-access-isolation",
+    name: "Suspicious access isolation",
+    category: "Security",
+    triggerCondition: "Impossible travel or anomalous OAuth token scope elevation",
+    triggeredCountThisMonth: 1,
+    status: "Active",
+    approvalRequired: true,
+    steps: [
+      "Snapshot active session metadata and IP reputation score",
+      "Revoke refresh tokens for flagged session without terminating healthy endpoints",
+      "Enforce step-up hardware MFA challenge on next login",
+      "Generate incident ticket with Security Investigation Agent summary"
+    ]
+  },
+  {
+    id: "pb-messaging-fallback",
+    name: "Cross-platform chat continuity bridge",
+    category: "Communication Mesh",
+    triggerCondition: "Primary chat provider (Teams/Slack) HTTP 5xx rate > 5%",
+    triggeredCountThisMonth: 0,
+    status: "Active",
+    approvalRequired: true,
+    steps: [
+      "Activate federated Matrix / Mattermost emergency bridge rooms",
+      "Sync critical incident response channels and on-call roster",
+      "Broadcast fallback workspace link via SMS and backup email relay",
+      "Queue missed messages for replay once primary service recovers"
+    ]
+  },
+  {
+    id: "pb-storage-quota-rebalance",
+    name: "Storage threshold auto-tiering",
+    category: "Capacity",
+    triggerCondition: "Regional storage utilization > 85% (e.g., EU-West)",
+    triggeredCountThisMonth: 2,
+    status: "Active",
+    approvalRequired: false,
+    steps: [
+      "Identify cold archives untouched for > 180 days",
+      "Compress and migrate cold blobs to secondary archive tier",
+      "Re-verify regional write throughput and free capacity headroom"
+    ]
+  },
+  {
+    id: "pb-llm-degradation",
+    name: "AI triage model fallback",
+    category: "AI Operations",
+    triggerCondition: "Gemini 2.5 Pro timeout > 10s or quota throttling",
+    triggeredCountThisMonth: 0,
+    status: "Standby",
+    approvalRequired: false,
+    steps: [
+      "Route incoming log triage to Gemini 2.5 Flash low-latency pipeline",
+      "Switch root-cause context window to compressed summary embeddings",
+      "Restore primary reasoning model once p95 latency drops below 2s"
+    ]
+  }
+];
